@@ -8,7 +8,7 @@ function Header({color}) {
     <Content color={color}>
       <Container>
         <Link to="/">
-          <Logo>Pokedex</Logo>
+          <Logo>Pokédex</Logo>
         </Link>
       </Container>
     </Content>
