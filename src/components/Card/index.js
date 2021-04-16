@@ -5,7 +5,7 @@ import {Item, Number, Name, Left, Right, Image} from './style';
 
 function Card({data}) {
   return (
-    <Item to={data.name}>
+    <Item to={data.name} data-cy="card">
       <Row justify="space-between">
         <Left>
           <Name>{data.name}</Name>

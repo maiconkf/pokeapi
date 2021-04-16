@@ -9,6 +9,7 @@ import {Row, Col} from 'react-simple-flex-grid';
 import Button from '../../components/Filter/Button';
 import {Redirect, useLocation} from 'react-router-dom';
 import {GoBack} from './style';
+import Error from '../../components/Error';
 
 function Home(props) {
   const location = useLocation();
@@ -16,6 +17,10 @@ function Home(props) {
   const {arrPokemon, search} = state;
   const [redirect, setRedirect] = useState(false);
   const [list, setList] = useState(null);
+  const [error, setError] = useState({
+    isError: false,
+    msg: '',
+  });
   const [pagination, setPagination] = useState(null);
 
   const getAllPokemon = useCallback(
@@ -29,7 +34,9 @@ function Home(props) {
           : `${api}?limit=24&offset=0`
       }`;
 
-      const data = await fetch(url).then((res) => res.json());
+      const data = await fetch(url)
+        .then((res) => res.json())
+        .catch(() => setError({isError: true, msg: 'Pokémon not found'}));
       setList(data);
 
       if (!search) {
@@ -52,14 +59,12 @@ function Home(props) {
   );
 
   useEffect(() => {
-    // console;
-    const search = location.search.split('=')[1];
+    dispatch({type: 'setClearPokemonArray'});
+  }, [dispatch]);
 
-    if (search) {
-      getAllPokemon(search);
-    } else {
-      getAllPokemon();
-    }
+  useEffect(() => {
+    const search = location.search.split('=')[1];
+    getAllPokemon(search);
   }, [getAllPokemon, location.search]);
 
   function handleLoader() {
@@ -82,25 +87,37 @@ function Home(props) {
           <Filter />
         </Container>
       </Hero>
-
-      {arrPokemon.length > 0 && (
-        <Container>
-          {arrPokemon.map((item) => (
-            <List data={item} />
-          ))}
-          {!search ? (
-            <Row justify="center">
-              <Col sm={3} lg={2}>
-                <Button color="primary" onClick={handleLoader} mt={40}>
-                  Load more Pokémon
-                </Button>
-              </Col>
-            </Row>
-          ) : (
-            <GoBack onClick={handleGoBack}>← Go back</GoBack>
-          )}
-        </Container>
-      )}
+      <Container>
+        {error.isError ? (
+          <Error>{error.msg}</Error>
+        ) : (
+          arrPokemon.length > 0 && (
+            <>
+              {arrPokemon.map((item, idx) => (
+                <List key={idx} data={item} />
+              ))}
+              {!search ? (
+                <Row justify="center">
+                  <Col sm={3} lg={2}>
+                    <Button
+                      color="primary"
+                      onClick={handleLoader}
+                      mt={40}
+                      data-cy="load-more"
+                    >
+                      Load more Pokémon
+                    </Button>
+                  </Col>
+                </Row>
+              ) : (
+                <GoBack onClick={handleGoBack} data-cy="go-back">
+                  ← Go back
+                </GoBack>
+              )}
+            </>
+          )
+        )}
+      </Container>
     </>
   );
 }

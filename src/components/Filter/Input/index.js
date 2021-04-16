@@ -9,6 +9,7 @@ function Input() {
       name="pokemon"
       pattern="[^\s]+"
       title="1 character minimum"
+      data-cy="input"
       required
     />
   );

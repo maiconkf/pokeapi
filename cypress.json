@@ -1,0 +1,12 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "chromeWebSecurity": false,
+  "component": {
+    "componentFolder": "src",
+    "testFiles": "**/*spec.js"
+  },
+
+  "env": {
+    "api": "https://pokeapi.co/api/v2/pokemon"
+  }
+}

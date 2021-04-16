@@ -5,8 +5,8 @@ import Card from '../Card';
 function List({data}) {
   return (
     <Row gutter="14" align="middle">
-      {data.map((item) => (
-        <Col key={item.id} xs={12} sm={6} lg={4}>
+      {data.map((item, idx) => (
+        <Col key={idx} xs={12} sm={6} lg={4}>
           <Card data={item} />
         </Col>
       ))}

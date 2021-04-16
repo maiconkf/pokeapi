@@ -11,7 +11,7 @@ function Filter() {
           <Input />
         </Col>
         <Col xs={12} sm={2}>
-          <Button color="dark" type="submit">
+          <Button color="dark" type="submit" data-cy="search">
             Search
           </Button>
         </Col>
