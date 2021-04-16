@@ -21,7 +21,11 @@ export const Image = styled(Row)`
 export const Text = styled.p`
   margin-top: ${({mt}) => mt || 10}px;
   text-transform: capitalize;
-
+  font-size: 0.85rem;
   border-right: ${({border, theme}) =>
-    border ? `1px solid ${theme.colors.steel}` : 0} }
+    border ? `1px solid ${theme.colors.steel}` : 0};
+
+  @media (min-width: 540px) {
+    font-size: 1rem;
+  }
 `;
