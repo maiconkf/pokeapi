@@ -30,7 +30,7 @@ function Home(props) {
         pagination
           ? pagination
           : search
-          ? `${api}/${search}`
+          ? `${api}/${search.toLowerCase()}`
           : `${api}?limit=24&offset=0`
       }`;
 
