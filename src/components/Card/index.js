@@ -1,6 +1,7 @@
 import React from 'react';
 import {Row} from 'react-simple-flex-grid';
-import {Item, Number, Name, Type, Left, Right, Image} from './style';
+import PokemonType from '../PokemonType';
+import {Item, Number, Name, Left, Right, Image} from './style';
 
 function Card({data}) {
   return (
@@ -9,9 +10,9 @@ function Card({data}) {
         <Left>
           <Name>{data.name}</Name>
           {data.types.map(({type, slot}) => (
-            <Type key={slot} type={type.name}>
+            <PokemonType key={slot} type={type.name}>
               {type.name}
-            </Type>
+            </PokemonType>
           ))}
         </Left>
         <Right justify="end">

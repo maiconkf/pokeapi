@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import {Row, Col} from 'react-simple-flex-grid';
 import {useLocation} from 'react-router-dom';
+import Container from '../../components/Container';
+import Header from '../../components/Header';
+import Hero from '../../components/Hero';
+import {Title, Image, Text} from './style';
+import PokemonType from '../../components/PokemonType';
+import Stats from '../../components/Stats/indec';
 
 function PokemonDetails() {
   const location = useLocation();
@@ -20,7 +27,59 @@ function PokemonDetails() {
 
   console.log(details);
 
-  return <div />;
+  if (!details) return '';
+
+  return (
+    <>
+      <Header color={details.types[0].type.name} />
+      <Hero color={details.types[0].type.name}>
+        <Container>
+          <Title>{details.name}</Title>
+        </Container>
+      </Hero>
+      <Image align="middle">
+        <img
+          src={details.sprites.other['official-artwork'].front_default}
+          alt={details.name}
+          width="250"
+          height="250"
+          loading="lazy"
+        />
+        <Row gutter="10" align="middle" justify="center">
+          {details.types.map(({slot, type}) => (
+            <Col>
+              <PokemonType key={slot} type={type.name} my="0">
+                {type.name}
+              </PokemonType>
+            </Col>
+          ))}
+        </Row>
+        <Row gutter="20">
+          <Text border="true">Weight: {details.weight / 10}kg</Text>
+          <Text>Height: {details.height / 10}m</Text>
+        </Row>
+      </Image>
+      <Container>
+        <Row justify="center">
+          <Col xs={12} md={10} lg={6}>
+            {details.stats.map((stat, idx) => (
+              <Row align="middle" gutter="20">
+                <Col xs={4}>
+                  <Row align="middle" justify="space-between">
+                    <Text mt="0">{stat.stat.name.replace('-', ' ')}</Text>
+                    <strong> {stat.base_stat}</strong>
+                  </Row>
+                </Col>
+                <Col xs={8}>
+                  <Stats key={idx} percent={stat.base_stat} />
+                </Col>
+              </Row>
+            ))}
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
 }
 
 export default PokemonDetails;

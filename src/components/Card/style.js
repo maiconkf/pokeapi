@@ -35,20 +35,6 @@ export const Right = styled(Left)`
   flex: 1;
 `;
 
-export const Type = styled.p`
-  background-color: ${({type, theme}) => theme.colors[type]};
-  padding: 3px 10px;
-  border-radius: 50px;
-  margin: 5px 0;
-  color: #fff;
-  font-weight: 500;
-  display: inline-block;
-
-  &:first-of-type {
-    margin: 15px 0 0;
-  }
-`;
-
 export const Image = styled.img`
   align-self: flex-end;
 `;

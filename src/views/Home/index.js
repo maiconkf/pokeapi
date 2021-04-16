@@ -76,7 +76,7 @@ function Home(props) {
 
   return (
     <>
-      <Header />
+      <Header color="primary" />
       <Hero color="primary">
         <Container>
           <Filter />

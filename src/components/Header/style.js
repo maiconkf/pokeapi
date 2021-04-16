@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const Content = styled.header`
   padding: 10px 0;
-  background-color: ${({theme}) => theme.colors.primary};
+  background-color: ${({theme, color}) => theme.colors[color]};
   width: 100%;
 `;
 
