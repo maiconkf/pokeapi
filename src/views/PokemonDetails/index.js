@@ -69,7 +69,7 @@ function PokemonDetails() {
               />
               <Row gutter="10" align="middle" justify="center">
                 {details.types.map(({slot, type}) => (
-                  <Col>
+                  <Col key={slot}>
                     <PokemonType key={slot} type={type.name} my="0">
                       {type.name}
                     </PokemonType>
@@ -85,7 +85,7 @@ function PokemonDetails() {
               <Row justify="center">
                 <Col xs={12} md={10} lg={6}>
                   {details.stats.map((stat, idx) => (
-                    <Row align="middle" gutter="16">
+                    <Row key={idx} align="middle" gutter="16">
                       <Col xs={6} sm={4}>
                         <Row align="middle" justify="space-between">
                           <Text mt="0">{stat.stat.name.replace('-', ' ')}</Text>

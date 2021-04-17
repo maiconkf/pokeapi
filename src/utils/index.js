@@ -24,5 +24,7 @@ export const getFavorites = (id) => {
     setLocal(JSON.stringify([id]));
   }
 
+  arrLocal = getLocal();
+
   return {favs, arrLocal};
 };

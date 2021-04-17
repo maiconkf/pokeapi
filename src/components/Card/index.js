@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Row} from 'react-simple-flex-grid';
 import {AppContext} from '../../context/app-context';
 import {getFavorites, getLocal} from '../../utils';
@@ -6,21 +6,18 @@ import PokemonType from '../PokemonType';
 import {Item, Number, Name, Left, Right, Image, Fav} from './style';
 
 function Card({data}) {
-  const {dispatch} = useContext(AppContext);
-  const [favoritess, setFavorites] = useState(false);
+  const {dispatch, state} = useContext(AppContext);
+  const [favorites, setFavorites] = useState(false);
 
-  const handleFavorite = useCallback(
-    (e, id) => {
-      e.stopPropagation();
-      e.preventDefault();
+  function handleFavorite(e, id) {
+    e.stopPropagation();
+    e.preventDefault();
 
-      const {favs, arrLocal} = getFavorites(id);
+    const {favs, arrLocal} = getFavorites(id);
 
-      setFavorites(favs);
-      dispatch({type: 'setFavs', favs: arrLocal});
-    },
-    [dispatch]
-  );
+    setFavorites(favs);
+    dispatch({type: 'setFavs', favs: arrLocal});
+  }
 
   useEffect(() => {
     const getFavs = getLocal();
@@ -28,7 +25,7 @@ function Card({data}) {
     if (getFavs && getFavs.includes(data.id)) {
       setFavorites(true);
     }
-  }, [data]);
+  }, [data, state.favs]);
 
   return (
     <Item to={data.name} data-cy="card">
@@ -40,7 +37,7 @@ function Card({data}) {
               {type.name}
             </PokemonType>
           ))}
-          {favoritess ? (
+          {favorites ? (
             <Fav
               onClick={(e) => handleFavorite(e, data.id)}
               className="fav--remove"
