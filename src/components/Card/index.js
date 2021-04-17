@@ -1,9 +1,35 @@
-import React from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {Row} from 'react-simple-flex-grid';
+import {AppContext} from '../../context/app-context';
+import {getFavorites, getLocal} from '../../utils';
 import PokemonType from '../PokemonType';
-import {Item, Number, Name, Left, Right, Image} from './style';
+import {Item, Number, Name, Left, Right, Image, Fav} from './style';
 
 function Card({data}) {
+  const {dispatch} = useContext(AppContext);
+  const [favoritess, setFavorites] = useState(false);
+
+  const handleFavorite = useCallback(
+    (e, id) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      const {favs, arrLocal} = getFavorites(id);
+
+      setFavorites(favs);
+      dispatch({type: 'setFavs', favs: arrLocal});
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    const getFavs = getLocal();
+
+    if (getFavs && getFavs.includes(data.id)) {
+      setFavorites(true);
+    }
+  }, [data]);
+
   return (
     <Item to={data.name} data-cy="card">
       <Row justify="space-between">
@@ -14,6 +40,18 @@ function Card({data}) {
               {type.name}
             </PokemonType>
           ))}
+          {favoritess ? (
+            <Fav
+              onClick={(e) => handleFavorite(e, data.id)}
+              className="fav--remove"
+            >
+              - Remove from favorites
+            </Fav>
+          ) : (
+            <Fav onClick={(e) => handleFavorite(e, data.id)}>
+              + Add to favorites
+            </Fav>
+          )}
         </Left>
         <Right justify="end">
           <Number>#{data.id.toString().padStart(3, '0')}</Number>

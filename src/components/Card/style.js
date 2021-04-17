@@ -38,3 +38,19 @@ export const Right = styled(Left)`
 export const Image = styled.img`
   align-self: flex-end;
 `;
+
+export const Fav = styled.button`
+  background-color: ${({theme}) => theme.colors.fav};
+  padding: 3px;
+  border-radius: 4px;
+  border: 0;
+  font-weight: 500;
+  margin-top: 1rem;
+  cursor: pointer;
+
+  &.fav--remove {
+    background-color: transparent;
+    border: 1px solid ${({theme}) => theme.colors.primary};
+    color: ${({theme}) => theme.colors.primary};
+  }
+`;

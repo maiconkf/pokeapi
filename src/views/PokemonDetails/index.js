@@ -38,12 +38,12 @@ function PokemonDetails() {
     <>
       <Header
         color={
-          details ? details.types[0].type.name : error.isError && 'primary'
+          details ? details.types[0].type.name : error.isError ? 'primary' : ''
         }
       />
       <Hero
         color={
-          details ? details.types[0].type.name : error.isError && 'primary'
+          details ? details.types[0].type.name : error.isError ? 'primary' : ''
         }
       >
         {!error.isError && details && (
